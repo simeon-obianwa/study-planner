@@ -1,32 +1,29 @@
 # Overview
+As a software engineer, my goal for this project is to deepen my mastery of modern vanilla JavaScript, mastering clean modular architecture, data immutability, error handling, and professional version control workflows.
 
-{Important! Do not say in this section that this is college assignment. Talk about what you are trying to accomplish as a software engineer to further your learning.}
+The software I developed for Sprint 1 is a core backend logic module for a Study Planner application. Built using Node.js and ES Modules, the application features an encapsulated TaskPlanner class that manages academic tasks, validates user input, handles data updates using native ES6 array methods, and enforces structural immutability through recursion (deepFreeze). It also leverages the external uuid npm package to generate collision-proof identifiers and demonstrates robust exception throwing and handling.
 
-{Provide a description of the software that you wrote to demonstrate the JavaScript language.}
+The primary purpose of writing this software is to demonstrate advanced JavaScript language proficiency, object-oriented design patterns, and defensive programming techniques in preparation for a full-stack web application deployment
 
-{Describe your purpose for writing this software.}
 
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+Software Demo Video: https://www.loom.com/share/3b1a4d2af66d48cabb34b448aeb853b6
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
+Runtime & Environment: Node.js (v18+ with ES Modules enabled via "type": "module" in package.json)
+Code Editor: Visual Studio Code with integrated PowerShell terminal
+Version Control: Git & GitHub for repository management and tracking
+Programming Language & Libraries:
+Vanilla JavaScript (ES2022+, featuring private class fields #, arrow functions, and Intl APIs)
+uuid (npm package for generating unique task identifiers)
 
 # Useful Websites
-
-{Make a list of websites that you found helpful in this project}
-
-- [Web Site Name](http://url.link.goes.here)
-- [Web Site Name](http://url.link.goes.here)
+MDN Web Docs - JavaScript Classes & Modules
+Node.js Documentation
+npm Registry (uuid package)
 
 # Future Work
+Sprint 2 (Web Application): Build out a responsive semantic HTML5 layout and CSS styling layer, connecting the core JavaScript logic directly to the browser via dynamic DOM manipulation.
+Sprint 3 (Cloud Database): Integrate a cloud-hosted database and backend API layer to ensure persistent data storage across sessions.
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-
-- Item 1
-- Item 2
-- Item 3
+Testing & Quality Assurance: Implement automated unit testing suites using Jest to thoroughly test class methods and exception handling.

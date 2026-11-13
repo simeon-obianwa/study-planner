@@ -13,7 +13,7 @@ console.log("▶ STEP 1: Creating New Tasks (Generating UUIDs)...");
 planner.addTask({
     id: generateId(),
     title: "Complete CSE 310 Applied Programming",
-    description: "Record Loom walkthrough and push to GitHub",
+    description: "Record Loom walkthrough video",
     status: TaskStatus.IN_PROGRESS,
     priority: PriorityLevel.HIGH,
     dueDate: new Date('2026-11-15')
