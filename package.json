@@ -1,0 +1,24 @@
+{
+  "name": "study-planner",
+  "version": "1.0.0",
+  "description": "{Important! Do not say in this section that this is college assignment. Talk about what you are trying to accomplish as a software engineer to further your learning.}",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simeon-obianwa/study-planner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/simeon-obianwa/study-planner/issues"
+  },
+  "homepage": "https://github.com/simeon-obianwa/study-planner#readme",
+  "dependencies": {
+    "uuid": "^14.0.3"
+  }
+}
