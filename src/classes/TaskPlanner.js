@@ -1,9 +1,17 @@
 import { TaskStatus } from '../models/constants.js';
 
+/**
+ * Manages the study task collection and enforces business rules
+ * for adding, updating, and querying tasks.
+ */
 export class TaskPlanner {
     // Private field - cannot be accessed directly from outside the class
     #tasks = [];
 
+    /**
+     * To validates and adds a new task object to the internal task list.
+     * Throws an error if the task title is missing or blank.
+     */
     addTask(task) {
         // Exception Throwing
         if (!task.title || task.title.trim() === "") {
@@ -12,6 +20,10 @@ export class TaskPlanner {
         this.#tasks.push(task);
     }
 
+    /**
+     * Locates a task by its unique ID and updates its status.
+     * Returns true if the task was found and updated, or false otherwise.
+     */
     updateTaskStatus(taskId, newStatus) {
         const task = this.#tasks.find(t => t.id === taskId);
 
@@ -22,10 +34,16 @@ export class TaskPlanner {
         return false;
     }
 
+    /**
+     * Filters and returns an array of tasks matching the given status.
+     */
     getTasksByStatus(status) {
         return this.#tasks.filter(task => task.status === status);
     }
 
+    /**
+     * Retrieves all stored tasks safely.
+     */
     getAllTasks() {
         // Return a shallow copy to prevent direct mutation
         return [...this.#tasks];

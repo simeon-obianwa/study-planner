@@ -1,3 +1,7 @@
+/**
+ * Sprint 1 Entry Point: Demonstrates TaskPlanner operations,
+ * ES6 array methods, date utilities, and exception handling in Node.js.
+ */
 import { TaskPlanner } from './classes/TaskPlanner.js';
 import { TaskStatus, PriorityLevel } from './models/constants.js';
 import { generateId, formatDate, isOverdue } from './utils/helpers.js';
@@ -28,6 +32,7 @@ planner.addTask({
     dueDate: new Date('2026-11-25')
 });
 
+// Project task objects into a concise summary format for terminal table display
 console.table(planner.getAllTasks().map(task => ({
     ID: task.id.substring(0, 8) + "...", // Truncate UUID for display
     Title: task.title,
@@ -41,7 +46,7 @@ const pendingTasks = planner.getTasksByStatus(TaskStatus.PENDING);
 console.log(`Found ${pendingTasks.length} PENDING task(s):`);
 console.table(pendingTasks.map(t => ({ Title: t.title, Status: t.status })));
 
-// 3. Demonstrate State Update and Validation
+// 3. To demonstrate State Update and Validation
 console.log("\n▶ STEP 3: Updating Task Status (Native Array Find)...");
 const tasks = planner.getAllTasks();
 const taskToUpdate = tasks[1];
@@ -49,12 +54,12 @@ const taskToUpdate = tasks[1];
 console.log(`Updating '${taskToUpdate.title}' from PENDING to COMPLETED.`);
 planner.updateTaskStatus(taskToUpdate.id, TaskStatus.COMPLETED);
 
-// Verify the update and check if it's overdue
+// To verify the update and check if it's overdue
 const updatedTask = planner.getAllTasks()[1];
 console.log(`Update Successful! New Status: ${updatedTask.status}`);
 console.log(`Is this task overdue? ${isOverdue(updatedTask.dueDate) ? "YES" : "NO"}`);
 
-// 4. Demonstrate Exception Throwing and Handling
+// 4. To demonstrate Exception Throwing and Handling
 console.log("\n▶ STEP 4: Error Handling & Validation...");
 try {
     console.log("Attempting to bypass validation with an empty task title...");
@@ -67,6 +72,7 @@ try {
         dueDate: new Date()
     });
 } catch (error) {
+    // Handle the validation error without crashing the process
     console.error(`❌ EXCEPTION CAUGHT: ${error.message}`);
 }
 

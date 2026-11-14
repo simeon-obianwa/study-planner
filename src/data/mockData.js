@@ -1,6 +1,10 @@
 import { TaskStatus, PriorityLevel } from '../models/constants.js';
 import { generateId } from '../utils/helpers.js';
 
+/**
+ * Generates and returns an initial list of sample study tasks
+ * with unique UUIDs for testing and session initialization.
+ */
 export function loadInitialTasks() {
     return [
         {
