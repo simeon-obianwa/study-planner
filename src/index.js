@@ -46,7 +46,7 @@ const pendingTasks = planner.getTasksByStatus(TaskStatus.PENDING);
 console.log(`Found ${pendingTasks.length} PENDING task(s):`);
 console.table(pendingTasks.map(t => ({ Title: t.title, Status: t.status })));
 
-// 3. To demonstrate State Update and Validation
+// 3. To demonstrate state update and validation
 console.log("\n▶ STEP 3: Updating Task Status (Native Array Find)...");
 const tasks = planner.getAllTasks();
 const taskToUpdate = tasks[1];

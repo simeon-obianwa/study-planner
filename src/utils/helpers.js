@@ -13,12 +13,17 @@ export function deepFreeze(object) {
 }
 
 /**
- * Formats a Date object into a human-readable string.
+ * Formats a Date object or date string into a human-readable string (e.g., "15 Nov 2026").
+ * Returns a safe fallback if the provided date is invalid.
  */
 export function formatDate(date) {
+    const parsedDate = new Date(date);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return 'No due date';
+    }
     return new Intl.DateTimeFormat('en-GB', {
         day: '2-digit', month: 'short', year: 'numeric'
-    }).format(date);
+    }).format(parsedDate);
 }
 
 /**
@@ -26,14 +31,17 @@ export function formatDate(date) {
  * and returns true if the deadline has already passed.
  */
 export function isOverdue(dueDate) {
+    const due = new Date(dueDate);
+    if (Number.isNaN(due.getTime())) {
+        return false;
+    }
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const due = new Date(dueDate);
     due.setHours(0, 0, 0, 0);
     return due < today;
 }
 
-// External Library, I applied the uuid npm package
+// External library, I applied the uuid npm package
 export function generateId() {
     return uuidv4();
 }

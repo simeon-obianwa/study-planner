@@ -1,0 +1,60 @@
+<%- include('partials/header') %>
+
+    <section class="panel">
+        <h1>Study Progress &amp; Analytics</h1>
+        <p>Live metrics generated from your active <code>TaskPlanner</code> session.</p>
+
+        <div class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= completionRate %>%
+                </span>
+                <span class="stat-label">Completion Rate</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= totalCount %>
+                </span>
+                <span class="stat-label">Total Tasks</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= inProgressCount %>
+                </span>
+                <span class="stat-label">In Progress</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= pendingCount %>
+                </span>
+                <span class="stat-label">Pending</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= completedCount %>
+                </span>
+                <span class="stat-label">Completed</span>
+            </article>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Overdue Attention Required (<%= overdueTasks.length %>)</h2>
+        <% if (overdueTasks.length===0) { %>
+            <p class="empty-state">All active study tasks are on schedule.</p>
+            <% } else { %>
+                <ul class="overdue-list">
+                    <% overdueTasks.forEach(task=> { %>
+                        <li>
+                            <a href="/tasks/<%= task.id %>"><strong>
+                                    <%= task.title %>
+                                </strong></a>
+                            <span>Due: <%= formatDate(task.dueDate) %> &bull; Status: <%= task.status.replace('_', ' ' )
+                                        %></span>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+    </section>
+
+    <%- include('partials/footer') %>

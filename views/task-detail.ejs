@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+    <section class="panel">
+        <a href="/" class="btn-link">&larr; Back to Dashboard</a>
+
+        <% if (!task) { %>
+            <h1>Task Not Found</h1>
+            <p>The requested study task does not exist.</p>
+            <% } else { const overdue=task.status !==TaskStatus.COMPLETED && isOverdue(task.dueDate); %>
+                <div class="detail-header">
+                    <h1>
+                        <%= task.title %>
+                    </h1>
+                    <span class="badge status-<%= task.status.toLowerCase() %>">
+                        <%= task.status.replace('_', ' ' ) %>
+                    </span>
+                </div>
+
+                <dl class="detail-list">
+                    <dt>Task ID (UUID)</dt>
+                    <dd><code><%= task.id %></code></dd>
+
+                    <dt>Description</dt>
+                    <dd>
+                        <%= task.description %>
+                    </dd>
+
+                    <dt>Priority Level</dt>
+                    <dd>
+                        <%= task.priority || 'MEDIUM' %>
+                    </dd>
+
+                    <dt>Due Date</dt>
+                    <dd>
+                        <%= formatDate(task.dueDate) %>
+                            <% if (overdue) { %><span class="overdue-tag">OVERDUE</span>
+                                <% } %>
+                    </dd>
+                </dl>
+
+                <form action="/tasks/<%= task.id %>/status" method="POST" class="detail-status-form">
+                    <input type="hidden" name="redirectTo" value="/tasks/<%= task.id %>">
+                    <label for="detail-status">Change Task Status:</label>
+                    <select id="detail-status" name="status">
+                        <% Object.values(TaskStatus).forEach(status=> { %>
+                            <option value="<%= status %>" <%=task.status===status ? 'selected' : '' %>>
+                                <%= status.replace('_', ' ' ) %>
+                            </option>
+                            <% }) %>
+                    </select>
+                    <button type="submit" class="btn-primary">Save Status</button>
+                </form>
+                <% } %>
+    </section>
+
+    <%- include('partials/footer') %>
