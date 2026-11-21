@@ -9,15 +9,30 @@ export class TaskPlanner {
     #tasks = [];
 
     /**
-     * To validates and adds a new task object to the internal task list.
-     * Throws an error if the task title is missing or blank.
+     * Validates and adds a new task object to the internal task list.
+     * Throws an error if the task title is missing/blank or if an email is malformed.
      */
     addTask(task) {
         // Exception Throwing
         if (!task.title || task.title.trim() === "") {
             throw new Error("Task creation failed: A title is strictly required.");
         }
-        this.#tasks.push(task);
+
+        if (task.ownerEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(task.ownerEmail)) {
+            throw new Error("Task creation failed: Please provide a valid owner email address.");
+        }
+
+        this.#tasks.push({
+            ...task,
+            notifications: task.notifications || []
+        });
+    }
+
+    /**
+     * Retrieves a single task by its unique UUID, or undefined if not found.
+     */
+    getTaskById(taskId) {
+        return this.#tasks.find(t => t.id === taskId);
     }
 
     /**
@@ -25,13 +40,26 @@ export class TaskPlanner {
      * Returns true if the task was found and updated, or false otherwise.
      */
     updateTaskStatus(taskId, newStatus) {
-        const task = this.#tasks.find(t => t.id === taskId);
+        const task = this.getTaskById(taskId);
 
         if (task) {
             task.status = newStatus;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Appends a status notification record to a task's notification history.
+     */
+    logNotification(taskId, message) {
+        const task = this.getTaskById(taskId);
+        if (task) {
+            task.notifications.unshift({
+                message,
+                sentAt: new Date()
+            });
+        }
     }
 
     /**

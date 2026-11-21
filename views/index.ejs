@@ -10,37 +10,77 @@
             </div>
             <% } %>
 
-                <form action="/tasks" method="POST" class="task-form">
-                    <div class="form-group">
-                        <label for="title">Task Title *</label>
-                        <input type="text" id="title" name="title" placeholder="e.g., Complete Express Routing Lab">
+                <% if (noticeMessage) { %>
+                    <div class="alert-success" role="status">
+                        <strong>Notification:</strong>
+                        <%= noticeMessage %>
                     </div>
+                    <% } %>
 
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" id="description" name="description"
-                            placeholder="Key objectives or study notes">
-                    </div>
+                        <form action="/tasks" method="POST" class="task-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="taskCode">Task ID (Optional — auto-generated if blank)</label>
+                                    <input type="text" id="taskCode" name="taskCode" placeholder="e.g., SP-103">
+                                </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="priority">Priority Level</label>
-                            <select id="priority" name="priority">
-                                <% Object.values(PriorityLevel).forEach(level=> { %>
-                                    <option value="<%= level %>" <%=level==='MEDIUM' ? 'selected' : '' %>><%= level %>
-                                    </option>
-                                    <% }) %>
-                            </select>
-                        </div>
+                                <div class="form-group">
+                                    <label for="title">Task Title *</label>
+                                    <input type="text" id="title" name="title"
+                                        placeholder="e.g., Complete Express Routing Lab">
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="dueDate">Due Date</label>
-                            <input type="date" id="dueDate" name="dueDate" required>
-                        </div>
-                    </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" id="description" name="description"
+                                    placeholder="Key objectives or study notes">
+                            </div>
 
-                    <button type="submit" class="btn-primary">Create Study Task</button>
-                </form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="priority">Priority Level</label>
+                                    <select id="priority" name="priority">
+                                        <% Object.values(PriorityLevel).forEach(level=> { %>
+                                            <option value="<%= level %>" <%=level===PriorityLevel.MEDIUM ? 'selected'
+                                                : '' %>>
+                                                <%= level %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dueDate">Due Date</label>
+                                    <input type="date" id="dueDate" name="dueDate" required>
+                                </div>
+                            </div>
+
+                            <fieldset class="owner-fieldset">
+                                <legend>Task Owner &amp; Status Notification Details</legend>
+                                <div class="form-row-three">
+                                    <div class="form-group">
+                                        <label for="ownerName">Task Owner Name</label>
+                                        <input type="text" id="ownerName" name="ownerName"
+                                            placeholder="e.g., Simeon Obianwa" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ownerEmail">Task Owner Email</label>
+                                        <input type="email" id="ownerEmail" name="ownerEmail"
+                                            placeholder="name@example.com" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ownerPhone">Task Owner Mobile</label>
+                                        <input type="tel" id="ownerPhone" name="ownerPhone"
+                                            placeholder="+234 800 000 0000" required>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <button type="submit" class="btn-primary">Create Study Task</button>
+                        </form>
     </section>
 
     <section class="panel">
@@ -66,12 +106,17 @@
                         %>
                         <article class="task-card <%= overdue ? 'is-overdue' : '' %>">
                             <div class="card-top">
-                                <span class="badge status-<%= task.status.toLowerCase() %>">
-                                    <%= task.status.replace('_', ' ' ) %>
+                                <span class="badge task-id-badge">
+                                    <%= task.taskCode || 'SP-000' %>
                                 </span>
-                                <span class="badge priority-<%= (task.priority || 'MEDIUM').toLowerCase() %>">
-                                    <%= task.priority || 'MEDIUM' %>
-                                </span>
+                                <div class="badge-group">
+                                    <span class="badge status-<%= task.status.toLowerCase() %>">
+                                        <%= task.status.replace('_', ' ' ) %>
+                                    </span>
+                                    <span class="badge priority-<%= (task.priority || 'MEDIUM').toLowerCase() %>">
+                                        <%= task.priority || 'MEDIUM' %>
+                                    </span>
+                                </div>
                             </div>
 
                             <h3><a href="/tasks/<%= task.id %>">
@@ -80,6 +125,22 @@
                             <p class="task-desc">
                                 <%= task.description %>
                             </p>
+
+                            <div class="owner-info">
+                                <div><strong>Owner:</strong>
+                                    <%= task.ownerName || 'Unassigned' %>
+                                </div>
+                                <% if (task.ownerEmail) { %>
+                                    <div><strong>Email:</strong>
+                                        <%= task.ownerEmail %>
+                                    </div>
+                                    <% } %>
+                                        <% if (task.ownerPhone) { %>
+                                            <div><strong>Mobile:</strong>
+                                                <%= task.ownerPhone %>
+                                            </div>
+                                            <% } %>
+                            </div>
 
                             <p class="task-meta">
                                 Due: <strong>
