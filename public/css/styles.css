@@ -360,11 +360,230 @@ select:focus {
     word-break: break-word;
 }
 
+/* Task Detail Page */
+.detail-nav {
+    margin-bottom: 1rem;
+}
+
+.detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1.25rem;
+}
+
+.detail-header h1 {
+    margin-bottom: 0;
+}
+
+.detail-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.detail-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.25rem 0 1.5rem;
+    padding: 1rem;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.detail-item-full {
+    grid-column: 1 / -1;
+}
+
+.detail-list dt {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+}
+
+.detail-list dd {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    word-break: break-word;
+}
+
+.detail-status-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.notification-log {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.notification-item {
+    background: #faf9f5;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+}
+
+.notification-time {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+/* Analytics Page */
+.panel-subtitle {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 1.25rem;
+}
+
+.progress-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-card-alert {
+    background: var(--danger-bg);
+    border-color: #f4c7c3;
+}
+
+.stat-card-alert .stat-value {
+    color: var(--danger);
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--header-bg);
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.overdue-list {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.overdue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    background: var(--danger-bg);
+    border: 1px solid #f4c7c3;
+    border-left: 4px solid var(--danger);
+    border-radius: 6px;
+}
+
+.overdue-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+}
+
+.overdue-title {
+    color: var(--header-bg);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.overdue-title:hover {
+    text-decoration: underline;
+}
+
+.overdue-owner {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.overdue-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    white-space: nowrap;
+}
+
+.overdue-date {
+    font-size: 0.85rem;
+    color: var(--danger);
+}
+
 @media (max-width: 640px) {
 
     .form-row,
-    .form-row-three {
+    .form-row-three,
+    .detail-list {
         grid-template-columns: 1fr;
+    }
+
+    .overdue-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .overdue-meta {
+        align-items: flex-start;
     }
 
     .header-inner {

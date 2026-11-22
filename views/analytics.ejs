@@ -2,26 +2,27 @@
 
     <section class="panel">
         <h1>Study Progress &amp; Analytics</h1>
-        <p>Live metrics generated from your active <code>TaskPlanner</code> session.</p>
+        <p class="panel-subtitle">Live metrics calculated dynamically from your active <code>TaskPlanner</code> session.
+        </p>
+
+        <div class="progress-wrapper" aria-label="Overall task completion progress">
+            <div class="progress-header">
+                <span>Overall Completion</span>
+                <strong>
+                    <%= completionRate %>%
+                </strong>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: <%= completionRate %>%;"></div>
+            </div>
+        </div>
 
         <div class="stats-grid">
-            <article class="stat-card">
-                <span class="stat-value">
-                    <%= completionRate %>%
-                </span>
-                <span class="stat-label">Completion Rate</span>
-            </article>
             <article class="stat-card">
                 <span class="stat-value">
                     <%= totalCount %>
                 </span>
                 <span class="stat-label">Total Tasks</span>
-            </article>
-            <article class="stat-card">
-                <span class="stat-value">
-                    <%= inProgressCount %>
-                </span>
-                <span class="stat-label">In Progress</span>
             </article>
             <article class="stat-card">
                 <span class="stat-value">
@@ -31,9 +32,21 @@
             </article>
             <article class="stat-card">
                 <span class="stat-value">
+                    <%= inProgressCount %>
+                </span>
+                <span class="stat-label">In Progress</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
                     <%= completedCount %>
                 </span>
                 <span class="stat-label">Completed</span>
+            </article>
+            <article class="stat-card stat-card-alert">
+                <span class="stat-value">
+                    <%= overdueTasks.length %>
+                </span>
+                <span class="stat-label">Overdue</span>
             </article>
         </div>
     </section>
@@ -41,16 +54,36 @@
     <section class="panel">
         <h2>Overdue Attention Required (<%= overdueTasks.length %>)</h2>
         <% if (overdueTasks.length===0) { %>
-            <p class="empty-state">All active study tasks are on schedule.</p>
+            <p class="empty-state">All active study tasks are currently on schedule.</p>
             <% } else { %>
                 <ul class="overdue-list">
                     <% overdueTasks.forEach(task=> { %>
-                        <li>
-                            <a href="/tasks/<%= task.id %>"><strong>
+                        <li class="overdue-item">
+                            <div class="overdue-main">
+                                <span class="badge task-id-badge">
+                                    <%= task.taskCode || 'SP-000' %>
+                                </span>
+                                <a href="/tasks/<%= task.id %>" class="overdue-title">
                                     <%= task.title %>
-                                </strong></a>
-                            <span>Due: <%= formatDate(task.dueDate) %> &bull; Status: <%= task.status.replace('_', ' ' )
-                                        %></span>
+                                </a>
+                                <span class="overdue-owner">
+                                    Owner: <strong>
+                                        <%= task.ownerName || 'Unassigned' %>
+                                    </strong>
+                                    <% if (task.ownerEmail) { %> &bull; <%= task.ownerEmail %>
+                                            <% } %>
+                                                <% if (task.ownerPhone) { %> &bull; <%= task.ownerPhone %>
+                                                        <% } %>
+                                </span>
+                            </div>
+                            <div class="overdue-meta">
+                                <span class="badge status-<%= task.status.toLowerCase() %>">
+                                    <%= task.status.replace('_', ' ' ) %>
+                                </span>
+                                <span class="overdue-date">Due: <strong>
+                                        <%= formatDate(task.dueDate) %>
+                                    </strong></span>
+                            </div>
                         </li>
                         <% }) %>
                 </ul>

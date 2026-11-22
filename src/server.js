@@ -90,7 +90,7 @@ app.post('/tasks', (req, res) => {
     }
 });
 
-// INTERACTIVE INPUT: Update task status and trigger owner status notification
+// Interractive Input: Update task status and trigger owner status notification
 app.post('/tasks/:id/status', (req, res) => {
     const { id } = req.params;
     const { status, redirectTo } = req.body;
@@ -105,7 +105,7 @@ app.post('/tasks/:id/status', (req, res) => {
 
         notice = channels
             ? `Status for ${task.taskCode} updated to ${formattedStatus}. Notification dispatched to ${task.ownerName} (${channels}).`
-            : `Status for ${task.taskCode} updated to ${formattedStatus}. (No email/phone on file for notification.)`;
+            : `Status for ${task.taskCode} updated to ${formattedStatus}. (No email/mobile on file for notification.)`;
 
         planner.logNotification(id, notice);
         console.log(`[STATUS NOTIFICATION] ${new Date().toISOString()} — ${notice}`);
@@ -114,6 +114,58 @@ app.post('/tasks/:id/status', (req, res) => {
     const target = redirectTo || '/';
     const separator = target.includes('?') ? '&' : '?';
     res.redirect(notice ? `${target}${separator}notice=${encodeURIComponent(notice)}` : target);
+});
+
+// Page 2: Dynamic Single-Task Detail & Notification Log
+app.get('/tasks/:id', (req, res) => {
+    const task = planner.getTaskById(req.params.id);
+    const noticeMessage = req.query.notice || null;
+
+    if (!task) {
+        return res.status(404).render('task-detail', {
+            pageTitle: 'Task Not Found | Study Planner',
+            task: null,
+            noticeMessage: null
+        });
+    }
+
+    res.render('task-detail', {
+        pageTitle: `${task.taskCode} - ${task.title} | Study Planner`,
+        task,
+        noticeMessage
+    });
+});
+
+// Page 3: Dynamic Study Analytics & Overdue Report
+app.get('/analytics', (req, res) => {
+    const allTasks = planner.getAllTasks();
+    const pendingTasks = planner.getTasksByStatus(TaskStatus.PENDING);
+    const inProgressTasks = planner.getTasksByStatus(TaskStatus.IN_PROGRESS);
+    const completedTasks = planner.getTasksByStatus(TaskStatus.COMPLETED);
+    const overdueTasks = allTasks.filter(
+        t => t.status !== TaskStatus.COMPLETED && isOverdue(t.dueDate)
+    );
+
+    const completionRate = allTasks.length > 0
+        ? Math.round((completedTasks.length / allTasks.length) * 100)
+        : 0;
+
+    res.render('analytics', {
+        pageTitle: 'Study Analytics | Study Planner',
+        totalCount: allTasks.length,
+        pendingCount: pendingTasks.length,
+        inProgressCount: inProgressTasks.length,
+        completedCount: completedTasks.length,
+        overdueTasks,
+        completionRate
+    });
+});
+
+// 404 catch-all handler for unmatched routes
+app.use((req, res) => {
+    res.status(404).send(
+        '<h1>404 - Page Not Found</h1><p><a href="/">Return to Study Planner Dashboard</a></p>'
+    );
 });
 
 // Global error-handling middleware
