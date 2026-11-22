@@ -1,5 +1,4 @@
 :root {
-    /* Brand & Surfaces */
     --bg-page: #f5f3ee;
     --bg-surface: #ffffff;
     --bg-subtle: #faf9f5;
@@ -20,6 +19,7 @@
     --border: #dcd6ca;
     --badge-neutral-bg: #eae5db;
 
+    /* Semantic Status Colors */
     --danger: #b42318;
     --danger-bg: #fef3f2;
     --danger-border: #f4c7c3;
@@ -30,9 +30,11 @@
     --info-bg: #e7f0ec;
     --info-text: #1b4332;
 
+    /* Font Stacks */
     --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
 
+    /* Layout, Radii, Elevation & Motion */
     --container-max: 960px;
     --radius-sm: 4px;
     --radius-md: 6px;
@@ -468,6 +470,7 @@ select:hover {
     vertical-align: middle;
 }
 
+/* Home Page */
 .hero-panel {
     background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-hero-end) 100%);
     border-left: 5px solid var(--header-bg);
@@ -535,6 +538,7 @@ select:hover {
     margin-bottom: auto;
 }
 
+/* Task Dashboard Page */
 .section-header {
     display: flex;
     flex-wrap: wrap;
@@ -661,6 +665,7 @@ select:hover {
     font-size: 0.86rem;
 }
 
+/* Task Detail & Notification History Page */
 .detail-nav {
     margin-bottom: 1rem;
 }
@@ -747,4 +752,186 @@ select:hover {
     font-weight: 600;
     color: var(--text-muted);
     margin-bottom: 0.25rem;
+}
+
+/* Task Analytics Page */
+.progress-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.45rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 300ms ease;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1rem;
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.stat-card-alert {
+    background: var(--danger-bg);
+    border-color: var(--danger-border);
+}
+
+.stat-card-alert .stat-value {
+    color: var(--danger);
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--header-bg);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.overdue-list {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.overdue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    border-left: 4px solid var(--danger);
+    border-radius: var(--radius-md);
+}
+
+.overdue-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+}
+
+.overdue-title {
+    color: var(--header-bg);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.overdue-title:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.overdue-owner {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    overflow-wrap: anywhere;
+}
+
+.overdue-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    white-space: nowrap;
+}
+
+.overdue-date {
+    font-size: 0.85rem;
+    color: var(--danger);
+}
+
+/* Responsive Breakpoints & Motion Preferences */
+@media (max-width: 768px) {
+    .form-row-three {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .panel {
+        padding: 1.15rem;
+    }
+
+    .hero-panel {
+        padding: 1.4rem 1.15rem;
+    }
+
+    .form-row,
+    .detail-list {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .overdue-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .overdue-meta {
+        align-items: flex-start;
+    }
+
+    .header-inner {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
