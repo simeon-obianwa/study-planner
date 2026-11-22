@@ -1,0 +1,71 @@
+<%- include('partials/header') %>
+
+    <section class="panel hero-panel">
+        <span class="hero-eyebrow">Modular Study Management</span>
+        <h1>Organize Your Study Goals with Clarity</h1>
+        <p class="hero-lead">
+            Track coursework milestones, assign task owners with automated status notification logs,
+            and monitor real-time completion progress</p>
+        <div class="hero-actions">
+            <a href="/dashboard" class="btn-primary btn-link-primary">Open Task Dashboard</a>
+            <a href="/analytics" class="btn-secondary">View Study Analytics</a>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Live Workspace Snapshot</h2>
+        <div class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= totalCount %>
+                </span>
+                <span class="stat-label">Total Tasks</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= activeCount %>
+                </span>
+                <span class="stat-label">Active Tasks</span>
+            </article>
+            <article class="stat-card">
+                <span class="stat-value">
+                    <%= completedCount %>
+                </span>
+                <span class="stat-label">Completed</span>
+            </article>
+            <article class="stat-card <%= overdueCount > 0 ? 'stat-card-alert' : '' %>">
+                <span class="stat-value">
+                    <%= overdueCount %>
+                </span>
+                <span class="stat-label">Overdue</span>
+            </article>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Core Capabilities</h2>
+        <div class="feature-grid">
+            <article class="feature-card">
+                <h3>Structured Task Tracking</h3>
+                <p>Create study tasks with custom or auto-generated Task IDs, priority levels, due dates, and instant
+                    status filters.</p>
+                <a href="/dashboard" class="btn-link">Manage Tasks &rarr;</a>
+            </article>
+
+            <article class="feature-card">
+                <h3>Owner Status Notifications</h3>
+                <p>Assign Task Owner Name, Email, and Mobile details so every workflow change logs a timestamped
+                    notification trail.</p>
+                <a href="/dashboard" class="btn-link">Review Task Owners &rarr;</a>
+            </article>
+
+            <article class="feature-card">
+                <h3>Real-Time Progress Analytics</h3>
+                <p>Monitor overall completion percentage, status distribution, and overdue deadlines requiring immediate
+                    follow-up.</p>
+                <a href="/analytics" class="btn-link">Explore Analytics &rarr;</a>
+            </article>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>

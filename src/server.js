@@ -35,8 +35,25 @@ app.use((req, res, next) => {
     next();
 });
 
-// PAGE 1: Interactive Study Dashboard (supports ?status= query filtering)
+// Page 0: Dynamic Home Landing Page
 app.get('/', (req, res) => {
+    const allTasks = planner.getAllTasks();
+    const completedTasks = planner.getTasksByStatus(TaskStatus.COMPLETED);
+    const overdueTasks = allTasks.filter(
+        t => t.status !== TaskStatus.COMPLETED && isOverdue(t.dueDate)
+    );
+
+    res.render('home', {
+        pageTitle: 'Home | Study Planner',
+        totalCount: allTasks.length,
+        activeCount: allTasks.length - completedTasks.length,
+        completedCount: completedTasks.length,
+        overdueCount: overdueTasks.length
+    });
+});
+
+// Page 1: Interactive Task Dashboard (supports ?status= query filtering)
+app.get('/dashboard', (req, res) => {
     const selectedStatus = req.query.status || 'ALL';
     const noticeMessage = req.query.notice || null;
     const tasks = selectedStatus === 'ALL'
@@ -44,14 +61,14 @@ app.get('/', (req, res) => {
         : planner.getTasksByStatus(selectedStatus);
 
     res.render('index', {
-        pageTitle: 'Dashboard | Study Planner',
+        pageTitle: 'Task Dashboard | Study Planner',
         tasks,
         selectedStatus,
         noticeMessage
     });
 });
 
-// INTERACTIVE INPUT: Create a new study task with Task ID & owner contact info
+// Interactive Input: Create a new study task with Task ID & owner contact info
 app.post('/tasks', (req, res) => {
     const {
         taskCode,
@@ -79,10 +96,10 @@ app.post('/tasks', (req, res) => {
             ownerEmail: ownerEmail?.trim() || '',
             ownerPhone: ownerPhone?.trim() || ''
         });
-        res.redirect(`/?notice=${encodeURIComponent(`Task ${assignedCode.toUpperCase()} created successfully.`)}`);
+        res.redirect(`/dashboard?notice=${encodeURIComponent(`Task ${assignedCode.toUpperCase()} created successfully.`)}`);
     } catch (error) {
         res.status(400).render('index', {
-            pageTitle: 'Dashboard | Study Planner',
+            pageTitle: 'Task Dashboard | Study Planner',
             tasks: planner.getAllTasks(),
             selectedStatus: 'ALL',
             errorMessage: error.message
@@ -90,7 +107,7 @@ app.post('/tasks', (req, res) => {
     }
 });
 
-// Interractive Input: Update task status and trigger owner status notification
+// Interactive Input: Update task status and trigger owner status notification
 app.post('/tasks/:id/status', (req, res) => {
     const { id } = req.params;
     const { status, redirectTo } = req.body;
@@ -111,7 +128,7 @@ app.post('/tasks/:id/status', (req, res) => {
         console.log(`[STATUS NOTIFICATION] ${new Date().toISOString()} — ${notice}`);
     }
 
-    const target = redirectTo || '/';
+    const target = redirectTo || '/dashboard';
     const separator = target.includes('?') ? '&' : '?';
     res.redirect(notice ? `${target}${separator}notice=${encodeURIComponent(notice)}` : target);
 });
@@ -136,7 +153,7 @@ app.get('/tasks/:id', (req, res) => {
     });
 });
 
-// Page 3: Dynamic Study Analytics & Overdue Report
+// Page 3: Dynamic Task Analytics & Overdue Report
 app.get('/analytics', (req, res) => {
     const allTasks = planner.getAllTasks();
     const pendingTasks = planner.getTasksByStatus(TaskStatus.PENDING);
@@ -151,7 +168,7 @@ app.get('/analytics', (req, res) => {
         : 0;
 
     res.render('analytics', {
-        pageTitle: 'Study Analytics | Study Planner',
+        pageTitle: 'Task Analytics | Study Planner',
         totalCount: allTasks.length,
         pendingCount: pendingTasks.length,
         inProgressCount: inProgressTasks.length,
@@ -164,7 +181,7 @@ app.get('/analytics', (req, res) => {
 // 404 catch-all handler for unmatched routes
 app.use((req, res) => {
     res.status(404).send(
-        '<h1>404 - Page Not Found</h1><p><a href="/">Return to Study Planner Dashboard</a></p>'
+        '<h1>404 - Page Not Found</h1><p><a href="/">Return to Study Planner Home</a></p>'
     );
 });
 

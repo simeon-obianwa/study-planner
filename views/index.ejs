@@ -20,7 +20,7 @@
                         <form action="/tasks" method="POST" class="task-form">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="taskCode">Task ID (Optional — auto-generated if blank)</label>
+                                    <label for="taskCode">Task ID</label>
                                     <input type="text" id="taskCode" name="taskCode" placeholder="e.g., SP-103">
                                 </div>
 
@@ -87,9 +87,10 @@
         <div class="section-header">
             <h2>Study Tasks (<%= tasks.length %>)</h2>
             <nav class="filter-bar" aria-label="Filter tasks by status">
-                <a href="/?status=ALL" class="filter-pill <%= selectedStatus === 'ALL' ? 'active' : '' %>">All</a>
+                <a href="/dashboard?status=ALL"
+                    class="filter-pill <%= selectedStatus === 'ALL' ? 'active' : '' %>">All</a>
                 <% Object.values(TaskStatus).forEach(status=> { %>
-                    <a href="/?status=<%= status %>"
+                    <a href="/dashboard?status=<%= status %>"
                         class="filter-pill <%= selectedStatus === status ? 'active' : '' %>">
                         <%= status.replace('_', ' ' ) %>
                     </a>
@@ -153,7 +154,8 @@
 
                             <div class="card-actions">
                                 <form action="/tasks/<%= task.id %>/status" method="POST" class="inline-form">
-                                    <input type="hidden" name="redirectTo" value="/?status=<%= selectedStatus %>">
+                                    <input type="hidden" name="redirectTo"
+                                        value="/dashboard?status=<%= selectedStatus %>">
                                     <label for="status-<%= task.id %>" class="sr-only">Update Status</label>
                                     <select id="status-<%= task.id %>" name="status" onchange="this.form.submit()">
                                         <% Object.values(TaskStatus).forEach(status=> { %>
