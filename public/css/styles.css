@@ -161,6 +161,9 @@ code {
     display: block;
     width: 38px;
     height: 38px;
+    padding: 4px;
+    background-color: var(--bg-page);
+    border-radius: var(--radius-md);
     transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
 
