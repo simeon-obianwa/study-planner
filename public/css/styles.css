@@ -167,6 +167,11 @@ code {
     transition: transform var(--transition-fast), opacity var(--transition-fast);
 }
 
+.brand:hover .brand-icon {
+    transform: scale(1.05);
+    opacity: 0.92;
+}
+
 .brand-text {
     color: var(--text-inverse);
     font-size: 1.2rem;
@@ -785,19 +790,32 @@ select:hover {
     font-variant-numeric: tabular-nums;
 }
 
-.progress-track {
+.progress-bar {
+    display: block;
     width: 100%;
     height: 12px;
-    background: var(--bg-page);
+    appearance: none;
+    -webkit-appearance: none;
     border: 1px solid var(--border);
     border-radius: var(--radius-pill);
+    background-color: var(--bg-page);
     overflow: hidden;
 }
 
-.progress-fill {
-    height: 100%;
-    background: var(--primary);
+.progress-bar::-webkit-progress-bar {
+    background-color: var(--bg-page);
+    border-radius: var(--radius-pill);
+}
+
+.progress-bar::-webkit-progress-value {
+    background-color: var(--primary);
+    border-radius: var(--radius-pill);
     transition: width 300ms ease;
+}
+
+.progress-bar::-moz-progress-bar {
+    background-color: var(--primary);
+    border-radius: var(--radius-pill);
 }
 
 .stats-grid {
