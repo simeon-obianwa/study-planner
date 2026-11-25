@@ -168,7 +168,7 @@ app.get('/analytics', (req, res) => {
         : 0;
 
     res.render('analytics', {
-        pageTitle: 'Task Analytics | Study Planner',
+        pageTitle: 'Study Analytics | Study Planner',
         totalCount: allTasks.length,
         pendingCount: pendingTasks.length,
         inProgressCount: inProgressTasks.length,
